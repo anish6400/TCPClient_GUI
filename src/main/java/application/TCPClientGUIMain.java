@@ -98,14 +98,18 @@ public class TCPClientGUIMain {
 
         sentStyle = chatTextPane.addStyle("SentStyle", defaultStyle);
     }
-
     private void sendMessage() {
         String message = messageTextPane.getText();
-        if (!message.isEmpty()) {
-            out.println(message);
-            messageTextPane.setText("");
-            logMessage("You: " + message, sentStyle);
+        if(message.isEmpty()) {
+            return;
         }
+        String[] messageSplitByLine = message.split("\n");
+        for(String messageLine: messageSplitByLine){
+            logMessage("You: " + messageLine, sentStyle); // Log in black color
+        }
+        // Send the message to the client
+        out.println(message);
+        messageTextPane.setText("");
     }
 
     private void connectToServer(String serverIp, int serverPort) {
